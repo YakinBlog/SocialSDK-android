@@ -15,14 +15,14 @@ public class WXCallbackActivity extends Activity implements IWXAPIEventHandler {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WXApi.registerHandler(getIntent(), this);
+        WXAPI.registerHandler(getIntent(), this);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        WXApi.registerHandler(getIntent(), this);
+        WXAPI.registerHandler(getIntent(), this);
     }
 
     @Override

@@ -18,7 +18,6 @@ import com.yakin.socialsdk.bus.BusProvider;
 import com.yakin.socialsdk.model.SocialResult;
 import com.yakin.socialsdk.model.SocialScene;
 import com.yakin.socialsdk.utils.AppUtil;
-import com.yakin.socialsdk.utils.IoUtil;
 import com.yakin.socialsdk.utils.ThreadMgr;
 
 import java.io.InputStream;
@@ -48,18 +47,18 @@ public class WXShareProxy {
                     SocialSDK.log(action.toUpperCase(), e.getLocalizedMessage());
                     thumb = AppUtil.getAppIcon(context);
                 }
-                final byte[] thumbBytes = IoUtil.bitmapToBytes(thumb);
+                final Bitmap thumbBitmap = thumb;
                 ThreadMgr.postTask(ThreadMgr.TYPE_UI, new Runnable() {
                     @Override
                     public void run() {
-                        share(context, appId, action, scene, thumbBytes);
+                        share(context, appId, action, scene, thumbBitmap);
                     }
                 });
             }
         });
     }
 
-    private static void share(Context context, String appId, final String action, SocialScene scene, byte[] thumb) {
+    private static void share(Context context, String appId, final String action, SocialScene scene, Bitmap thumb) {
         sCallback = new IWXCallback() {
             @Override
             public void onResult(int code, String error) {
@@ -83,11 +82,12 @@ public class WXShareProxy {
         WXMediaMessage mediaMessage = new WXMediaMessage(webpageObject);
         mediaMessage.title = title;
         mediaMessage.description = scene.getDesc();
-        mediaMessage.thumbData = thumb;
-        final SendMessageToWX.Req req = new SendMessageToWX.Req();
+        mediaMessage.setThumbImage(thumb);
+        thumb.recycle();
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());
         req.message = mediaMessage;
-        IWXAPI wxApi = WXApi.createWXAPIInstance(context, appId);
+        IWXAPI wxApi = WXAPI.createWXAPIInstance(context, appId);
         int supportVer = wxApi.getWXAppSupportAPI();
         SocialSDK.log(action.toUpperCase(), "supportVer:" + supportVer);
         if(BusEvent.ACTION_SHARE_TO_WECHAT_TIMELINE.equals(action)) {

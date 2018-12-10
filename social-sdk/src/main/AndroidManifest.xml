@@ -29,5 +29,10 @@
             android:name="${applicationId}.apshare.ShareEntryActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="true" android:launchMode="singleTask"/>
+        <!-- 钉钉 -->
+        <activity
+            android:name="${applicationId}.ddshare.DDShareActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true" android:launchMode="singleTask"/>
     </application>
 </manifest>

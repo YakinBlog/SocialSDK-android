@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.tencent.connect.share.QQShare;
 import com.tencent.connect.share.QzoneShare;
@@ -54,7 +55,7 @@ public class QQShareProxy {
 
     public static void onActivityResultData(String action, int reqCode, int resCode, Intent data) {
         sListener.action = action;
-        TencentApi.onActivityResultData(reqCode, resCode, data, sListener);
+        TencentAPI.onActivityResultData(reqCode, resCode, data, sListener);
         FileUtil.delete(sThumbPath);
     }
 
@@ -86,19 +87,23 @@ public class QQShareProxy {
     }
 
     private static void share(Context context, String appId, final String action, SocialScene scene, String thumb) {
-        Tencent tencentApi = TencentApi.createTencentInstance(context, appId);
+        String title = scene.getTitle();
+        if(TextUtils.isEmpty(title)) {
+            title = AppUtil.getAppName(context);
+        }
+        Tencent tencentApi = TencentAPI.createTencentInstance(context, appId);
         final Bundle bundle = new Bundle();
         sListener.action = action;
         if(BusEvent.ACTION_SHARE_TO_QQ.equals(action)) {
             bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
-            bundle.putString(QQShare.SHARE_TO_QQ_TITLE, scene.getTitle());
+            bundle.putString(QQShare.SHARE_TO_QQ_TITLE, title);
             bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, scene.getDesc());
             bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, scene.getLink());
             bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, thumb);
             tencentApi.shareToQQ((Activity) context, bundle, sListener);
         } else if(BusEvent.ACTION_SHARE_TO_QZONE.equals(action)) {
             bundle.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE, QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT);
-            bundle.putString(QzoneShare.SHARE_TO_QQ_TITLE, scene.getTitle());
+            bundle.putString(QzoneShare.SHARE_TO_QQ_TITLE, title);
             bundle.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, scene.getDesc());
             bundle.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, scene.getLink());
             ArrayList<String> imgs = new ArrayList<>();

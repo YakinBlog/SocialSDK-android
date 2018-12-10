@@ -19,7 +19,6 @@ import com.yakin.socialsdk.bus.BusProvider;
 import com.yakin.socialsdk.model.SocialResult;
 import com.yakin.socialsdk.model.SocialScene;
 import com.yakin.socialsdk.utils.AppUtil;
-import com.yakin.socialsdk.utils.IoUtil;
 import com.yakin.socialsdk.utils.ThreadMgr;
 
 import java.io.InputStream;
@@ -72,18 +71,18 @@ public class WBShareProxy {
                     SocialSDK.log(BusEvent.ACTION_SHARE_TO_WEIBO.toUpperCase(), e.getLocalizedMessage());
                     thumb = AppUtil.getAppIcon(context);
                 }
-                final byte[] thumbBytes = IoUtil.bitmapToBytes(thumb);
+                final Bitmap thumbBitmap = thumb;
                 ThreadMgr.postTask(ThreadMgr.TYPE_UI, new Runnable() {
                     @Override
                     public void run() {
-                        share(context, appKey, url, scope, scene, thumbBytes);
+                        share(context, appKey, url, scope, scene, thumbBitmap);
                     }
                 });
             }
         });
     }
 
-    private static void share(Context context, String appKey, String url, String scope, SocialScene scene, byte[] thumb) {
+    private static void share(Context context, String appKey, String url, String scope, SocialScene scene, Bitmap thumb) {
         String title = scene.getTitle();
         if(TextUtils.isEmpty(title)) {
             title = AppUtil.getAppName(context);
@@ -100,7 +99,8 @@ public class WBShareProxy {
         webpageObject.title = title;
         webpageObject.description = scene.getDesc();
         webpageObject.actionUrl = scene.getLink();
-        webpageObject.thumbData = thumb;
+        webpageObject.setThumbImage(thumb);
+        thumb.recycle();
         weiboMessage.mediaObject = webpageObject;
         sHandler.shareMessage(weiboMessage, false);
     }

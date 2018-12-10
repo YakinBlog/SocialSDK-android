@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
                 .setWechatAppId("wx88888888")
                 .setWeiboAppKey("2099293047")
                 .setQQAppId("1106709509")
-                .setAlipayAppId("2018121062498015");
+                .setAlipayAppId("2018121062498015")
+                .setDingAppId("dingoac68blhdjd3hobsbc");
 
         mResultView = (TextView) findViewById(R.id.result);
 
@@ -97,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
             SocialSDK.shareToQZone(this, mSocialScene);
         } else if(view.getId() == R.id.shareToAlipay) {
             SocialSDK.shareToAlipay(this, mSocialScene);
+        } else if(view.getId() == R.id.shareToDing) {
+            SocialSDK.shareToDing(this, mSocialScene);
         }
     }
 }

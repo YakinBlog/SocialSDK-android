@@ -80,9 +80,20 @@
         android:onClick="clickShare"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintRight_toLeftOf="@id/shareToQQ"
+        app:layout_constraintRight_toLeftOf="@id/shareToDing"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/shareToWeibo"/>
+
+    <Button
+        android:id="@+id/shareToDing"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="clickShare"
+        android:text="钉钉"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/shareToAlipay"
+        app:layout_constraintRight_toLeftOf="@id/shareToQZone"
+        app:layout_constraintTop_toBottomOf="@id/shareToQQ"/>
 
     <TextView
         android:id="@+id/result"

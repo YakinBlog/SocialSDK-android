@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 
-public class TencentApi {
+public class TencentAPI {
 
     static Tencent createTencentInstance(Context context, String appId) {
         return Tencent.createInstance(appId, context);

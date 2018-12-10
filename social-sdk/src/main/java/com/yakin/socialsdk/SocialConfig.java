@@ -11,6 +11,7 @@ public class SocialConfig {
             + "follow_app_official_microblog,invitation_write";
     String qqAppId;
     String alipayAppId;
+    String dingAppId;
 
     public SocialConfig setPrintLog(boolean printLog) {
         this.printLog = printLog;
@@ -47,10 +48,15 @@ public class SocialConfig {
         return this;
     }
 
+    public SocialConfig setDingAppId(String appId) {
+        this.dingAppId = appId;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "wxAppId=" + wechatAppId + "\nwbAppKey=" + weiboAppKey +
                 "\nwbRedirectrUrl=" + weiboRedirectrUrl + "\nweiboScope=" + weiboScope +
-                "\nqqAppId=" + qqAppId + "\nalipayAppId=" + alipayAppId;
+                "\nqqAppId=" + qqAppId + "\nalipayAppId=" + alipayAppId + "\ndingAppId=" + dingAppId;
     }
 }

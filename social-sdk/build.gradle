@@ -27,8 +27,9 @@ android {
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs') // QQ、支付宝
 
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6' // 微信
-    implementation (name:'weibo-4.3.6', ext:'aar') // 微博
+    api 'com.alibaba.android:ddsharesdk:1.1.0' // 钉钉
+    api (name:'weibo-4.3.6', ext:'aar') // 微博
 }

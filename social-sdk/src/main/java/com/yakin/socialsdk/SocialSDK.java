@@ -73,4 +73,12 @@ public class SocialSDK {
         }
         SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_ALIPAY, scene);
     }
+
+    public static void shareToDing(Context context, SocialScene scene) {
+        if(scene == null || sConfig == null || TextUtils.isEmpty(sConfig.dingAppId)) {
+            log(BusEvent.ACTION_SHARE_TO_DING.toUpperCase(), "scene:" + scene + "\nconfig:" + sConfig);
+            return;
+        }
+        SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_DING, scene);
+    }
 }
