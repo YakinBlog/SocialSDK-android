@@ -10,6 +10,7 @@ public class SocialConfig {
             + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
             + "follow_app_official_microblog,invitation_write";
     String qqAppId;
+    String alipayAppId;
 
     public SocialConfig setPrintLog(boolean printLog) {
         this.printLog = printLog;
@@ -41,10 +42,15 @@ public class SocialConfig {
         return this;
     }
 
+    public SocialConfig setAlipayAppId(String appId) {
+        this.alipayAppId = appId;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "wxAppId=" + wechatAppId + "\nwbAppKey=" + weiboAppKey +
                 "\nwbRedirectrUrl=" + weiboRedirectrUrl + "\nweiboScope=" + weiboScope +
-                "\nqqAppId=" + qqAppId;
+                "\nqqAppId=" + qqAppId + "\nalipayAppId=" + alipayAppId;
     }
 }

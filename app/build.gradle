@@ -17,6 +17,15 @@ android {
         }
     }
 
+    signingConfigs{
+        debug {
+            storeFile file("${project.rootDir.absolutePath}/debug.jks")
+            storePassword "yakinblog"
+            keyAlias "YakinBlog"
+            keyPassword "yakinblog"
+        }
+    }
+
     repositories {
         flatDir {
             dirs project(':social-sdk').file('libs')

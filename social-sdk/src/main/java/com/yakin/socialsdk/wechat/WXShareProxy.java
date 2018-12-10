@@ -1,5 +1,6 @@
 package com.yakin.socialsdk.wechat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -106,5 +107,6 @@ public class WXShareProxy {
         }
 
         wxApi.sendReq(req);
+        ((Activity) context).finish();
     }
 }

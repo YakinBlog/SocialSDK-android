@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.text.TextUtils;
 
 import com.sina.weibo.sdk.api.TextObject;
@@ -32,26 +33,26 @@ public class WBShareProxy {
     public static void doResultIntent(Intent intent) {
         if(sHandler != null) {
             if(intent == null || intent.getExtras() == null) {
-                SocialSDK.log("shareToWeibo", "WbShareError");
+                SocialSDK.log(BusEvent.ACTION_SHARE_TO_WEIBO.toUpperCase(), "WbShareError");
                 BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_WEIBO, new Exception("startup weibo failed")));
                 return;
             }
             sHandler.doResultIntent(intent, new WbShareCallback() {
                 @Override
                 public void onWbShareSuccess() {
-                    SocialSDK.log("shareToWeibo", "WbShareSuccess");
+                    SocialSDK.log(BusEvent.ACTION_SHARE_TO_WEIBO.toUpperCase(), "WbShareSuccess");
                     BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_WEIBO, SocialResult.RESULT_SUCCEED));
                 }
 
                 @Override
                 public void onWbShareCancel() {
-                    SocialSDK.log("shareToWeibo", "WbShareCancel");
+                    SocialSDK.log(BusEvent.ACTION_SHARE_TO_WEIBO.toUpperCase(), "WbShareCancel");
                     BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_WEIBO, SocialResult.RESULT_CANCEL));
                 }
 
                 @Override
                 public void onWbShareFail() {
-                    SocialSDK.log("shareToWeibo", "WbShareFail");
+                    SocialSDK.log(BusEvent.ACTION_SHARE_TO_WEIBO.toUpperCase(), "WbShareFail");
                     BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_WEIBO, new Exception("unknow")));
                 }
             });
@@ -68,7 +69,7 @@ public class WBShareProxy {
                     InputStream is = (InputStream) url.getContent();
                     thumb = BitmapFactory.decodeStream(is);
                 } catch (Exception e) {
-                    SocialSDK.log("shareToWeibo", e.getLocalizedMessage());
+                    SocialSDK.log(BusEvent.ACTION_SHARE_TO_WEIBO.toUpperCase(), e.getLocalizedMessage());
                     thumb = AppUtil.getAppIcon(context);
                 }
                 final byte[] thumbBytes = IoUtil.bitmapToBytes(thumb);
@@ -89,6 +90,7 @@ public class WBShareProxy {
         }
         WBSDK.ensureSDKInitialized(context, appKey, url, scope);
         sHandler = new WbShareHandler((Activity) context);
+        sHandler.setProgressColor(Color.GRAY);
         sHandler.registerApp();
         WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
         TextObject textObject = new TextObject();

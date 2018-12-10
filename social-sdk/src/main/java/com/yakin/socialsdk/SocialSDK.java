@@ -19,7 +19,7 @@ public class SocialSDK {
 
     public static void shareToWechat(Context context, SocialScene scene) {
         if(scene == null || sConfig == null || TextUtils.isEmpty(sConfig.wechatAppId)) {
-            log("shareToWechat", "scene:" + scene + "\nconfig:" + sConfig);
+            log(BusEvent.ACTION_SHARE_TO_WECHAT.toUpperCase(), "scene:" + scene + "\nconfig:" + sConfig);
             return;
         }
         SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_WECHAT, scene);
@@ -27,7 +27,7 @@ public class SocialSDK {
 
     public static void shareToWechatTimeline(Context context, SocialScene scene) {
         if(scene == null || sConfig == null || TextUtils.isEmpty(sConfig.wechatAppId)) {
-            log("shareToWechatTimeline", "scene:" + scene + "\nconfig:" + sConfig);
+            log(BusEvent.ACTION_SHARE_TO_WECHAT_TIMELINE.toUpperCase(), "scene:" + scene + "\nconfig:" + sConfig);
             return;
         }
         SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_WECHAT_TIMELINE, scene);
@@ -35,7 +35,7 @@ public class SocialSDK {
 
     public static void shareToWechatFavorite(Context context, SocialScene scene) {
         if(scene == null || sConfig == null || TextUtils.isEmpty(sConfig.wechatAppId)) {
-            log("shareToWechatFavorite", "scene:" + scene + "\nconfig:" + sConfig);
+            log(BusEvent.ACTION_SHARE_TO_WECHAT_FAVORITE.toUpperCase(), "scene:" + scene + "\nconfig:" + sConfig);
             return;
         }
         SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_WECHAT_FAVORITE, scene);
@@ -44,7 +44,7 @@ public class SocialSDK {
     public static void shareToWeibo(Context context, SocialScene scene) {
         if(scene == null || sConfig == null ||
                 TextUtils.isEmpty(sConfig.weiboAppKey) || TextUtils.isEmpty(sConfig.weiboRedirectrUrl)) {
-            log("shareToWeibo", "scene:" + scene + "\nconfig:" + sConfig);
+            log(BusEvent.ACTION_SHARE_TO_WEIBO.toUpperCase(), "scene:" + scene + "\nconfig:" + sConfig);
             return;
         }
         SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_WEIBO, scene);
@@ -52,7 +52,7 @@ public class SocialSDK {
 
     public static void shareToQQ(Context context, SocialScene scene) {
         if(scene == null || sConfig == null || TextUtils.isEmpty(sConfig.qqAppId)) {
-            log("shareToQQ", "scene:" + scene + "\nconfig:" + sConfig);
+            log(BusEvent.ACTION_SHARE_TO_QQ.toUpperCase(), "scene:" + scene + "\nconfig:" + sConfig);
             return;
         }
         SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_QQ, scene);
@@ -60,9 +60,17 @@ public class SocialSDK {
 
     public static void shareToQZone(Context context, SocialScene scene) {
         if(scene == null || sConfig == null || TextUtils.isEmpty(sConfig.qqAppId)) {
-            log("shareToQZone", "scene:" + scene + "\nconfig:" + sConfig);
+            log(BusEvent.ACTION_SHARE_TO_QZONE.toUpperCase(), "scene:" + scene + "\nconfig:" + sConfig);
             return;
         }
         SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_QZONE, scene);
+    }
+
+    public static void shareToAlipay(Context context, SocialScene scene) {
+        if(scene == null || sConfig == null || TextUtils.isEmpty(sConfig.alipayAppId)) {
+            log(BusEvent.ACTION_SHARE_TO_ALIPAY.toUpperCase(), "scene:" + scene + "\nconfig:" + sConfig);
+            return;
+        }
+        SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_ALIPAY, scene);
     }
 }

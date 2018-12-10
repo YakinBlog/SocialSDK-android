@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
+import com.yakin.socialsdk.alipay.AlipayShareProxy;
 import com.yakin.socialsdk.bus.BusEvent;
 import com.yakin.socialsdk.model.SocialScene;
 import com.yakin.socialsdk.qq.QQShareProxy;
@@ -40,6 +41,8 @@ public class SocialProxyHandler extends Activity {
         } else if(BusEvent.ACTION_SHARE_TO_QQ.equals(mSocialAction) ||
                 BusEvent.ACTION_SHARE_TO_QZONE.equals(mSocialAction)) {
             QQShareProxy.share(this, mSocialConfig.qqAppId, mSocialAction, mSocialScene);
+        } else if(BusEvent.ACTION_SHARE_TO_ALIPAY.equals(mSocialAction)) {
+            AlipayShareProxy.share(this, mSocialConfig.alipayAppId, mSocialScene);
         }
     }
 
