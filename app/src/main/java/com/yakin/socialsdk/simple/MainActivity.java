@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 .setWeiboAppKey("2099293047")
                 .setQQAppId("1106709509")
                 .setAlipayAppId("2018121062498015")
-                .setDingAppId("dingoac68blhdjd3hobsbc");
+                .setDingAppId("dingoa9ygtvrq4mphilr0r");
 
         mResultView = (TextView) findViewById(R.id.result);
 
@@ -77,6 +77,18 @@ public class MainActivity extends AppCompatActivity {
                         mResultView.setText("分享到微博" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
                     } else {
                         mResultView.setText("分享到微博失败:" + event.getThrowable().getLocalizedMessage());
+                    }
+                } else if(BusEvent.ACTION_SHARE_TO_DING.equals(event.getAction())) {
+                    if(event.getResult() != null) {
+                        mResultView.setText("分享到钉钉" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                    } else {
+                        mResultView.setText("分享到钉钉失败:" + event.getThrowable().getLocalizedMessage());
+                    }
+                } else if(BusEvent.ACTION_SHARE_TO_ALIPAY.equals(event.getAction())) {
+                    if(event.getResult() != null) {
+                        mResultView.setText("分享到支付宝" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                    } else {
+                        mResultView.setText("分享到支付宝失败:" + event.getThrowable().getLocalizedMessage());
                     }
                 }
             }

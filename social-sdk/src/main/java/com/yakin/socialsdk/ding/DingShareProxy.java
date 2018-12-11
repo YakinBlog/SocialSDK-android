@@ -12,6 +12,8 @@ import com.android.dingtalk.share.ddsharemodule.message.DDWebpageMessage;
 import com.android.dingtalk.share.ddsharemodule.message.SendMessageToDD;
 import com.yakin.socialsdk.SocialSDK;
 import com.yakin.socialsdk.bus.BusEvent;
+import com.yakin.socialsdk.bus.BusProvider;
+import com.yakin.socialsdk.model.SocialResult;
 import com.yakin.socialsdk.model.SocialScene;
 import com.yakin.socialsdk.utils.AppUtil;
 import com.yakin.socialsdk.utils.ThreadMgr;
@@ -26,6 +28,13 @@ public class DingShareProxy {
 
     public static void shareComplete(BaseResp resp) {
         SocialSDK.log(BusEvent.ACTION_SHARE_TO_DING.toUpperCase(), "code:" + resp.mErrCode + ", msg:" + resp.mErrStr);
+        if(resp.mErrCode == BaseResp.ErrCode.ERR_OK) {
+            BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_DING, SocialResult.RESULT_SUCCEED));
+        } else if(resp.mErrCode == BaseResp.ErrCode.ERR_USER_CANCEL) {
+            BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_DING, SocialResult.RESULT_CANCEL));
+        } else {
+            BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_DING, new Exception("[" + resp.mErrCode + "]" + resp.mErrStr)));
+        }
     }
 
     public static void share(final Context context, final String appId, final SocialScene scene) {

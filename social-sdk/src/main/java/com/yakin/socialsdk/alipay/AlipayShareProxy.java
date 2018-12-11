@@ -13,6 +13,8 @@ import com.alipay.share.sdk.openapi.IAPApi;
 import com.alipay.share.sdk.openapi.SendMessageToZFB;
 import com.yakin.socialsdk.SocialSDK;
 import com.yakin.socialsdk.bus.BusEvent;
+import com.yakin.socialsdk.bus.BusProvider;
+import com.yakin.socialsdk.model.SocialResult;
 import com.yakin.socialsdk.model.SocialScene;
 import com.yakin.socialsdk.utils.AppUtil;
 import com.yakin.socialsdk.utils.ThreadMgr;
@@ -24,7 +26,14 @@ import java.net.URL;
 public class AlipayShareProxy {
 
     public static void shareComplete(BaseResp resp) {
-        SocialSDK.log(BusEvent.ACTION_SHARE_TO_ALIPAY.toUpperCase(), "code:" + resp.errStr + ", msg:" + resp.errStr);
+        SocialSDK.log(BusEvent.ACTION_SHARE_TO_ALIPAY.toUpperCase(), "code:" + resp.errCode + ", msg:" + resp.errStr);
+        if(resp.errCode == com.android.dingtalk.share.ddsharemodule.message.BaseResp.ErrCode.ERR_OK) {
+            BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_ALIPAY, SocialResult.RESULT_SUCCEED));
+        } else if(resp.errCode == com.android.dingtalk.share.ddsharemodule.message.BaseResp.ErrCode.ERR_USER_CANCEL) {
+            BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_ALIPAY, SocialResult.RESULT_CANCEL));
+        } else {
+            BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_ALIPAY, new Exception("[" + resp.errCode + "]" + resp.errStr)));
+        }
     }
 
     public static void share(final Context context, final String appId, final SocialScene scene) {
