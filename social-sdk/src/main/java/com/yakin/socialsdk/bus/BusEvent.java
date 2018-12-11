@@ -10,6 +10,7 @@ public class BusEvent {
     public static final String ACTION_SHARE_TO_WEIBO = "action_share_to_weibo";
     public static final String ACTION_SHARE_TO_QQ = "action_share_to_qq";
     public static final String ACTION_SHARE_TO_QZONE = "action_share_to_qzone";
+    public static final String ACTION_SHARE_TO_QPUBLISH = "action_share_to_qpublish";
     public static final String ACTION_SHARE_TO_ALIPAY = "action_share_to_alipay";
     public static final String ACTION_SHARE_TO_DING = "action_share_to_ding";
 

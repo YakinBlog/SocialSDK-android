@@ -19,7 +19,7 @@ public class BusProvider {
 
     private static List<IBusListener> mListeners = new ArrayList<>();
 
-    public void registerSSOListener(final IBusListener listener) {
+    public void registerListener(final IBusListener listener) {
         ThreadMgr.postTask(ThreadMgr.TYPE_UI, new Runnable() {
             @Override
             public void run() {
@@ -28,7 +28,7 @@ public class BusProvider {
         });
     }
 
-    public void unregisterSSOListener(final IBusListener listener) {
+    public void unregisterListener(final IBusListener listener) {
         ThreadMgr.postTask(ThreadMgr.TYPE_UI, new Runnable() {
             @Override
             public void run() {

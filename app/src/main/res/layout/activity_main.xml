@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/shareTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分享"
+        android:textSize="18dp"
+        android:layout_margin="5dp"/>
+
     <Button
         android:id="@+id/shareToWechat"
         android:layout_width="0dp"
@@ -16,7 +24,8 @@
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintRight_toLeftOf="@id/shareToWechatTimeline"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shareTitle"/>
 
     <Button
         android:id="@+id/shareToWechatTimeline"
@@ -26,7 +35,8 @@
         android:text="微信朋友圈"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@id/shareToWechat"
-        app:layout_constraintRight_toLeftOf="@id/shareToWechatFavorite"/>
+        app:layout_constraintRight_toLeftOf="@id/shareToWechatFavorite"
+        app:layout_constraintTop_toBottomOf="@id/shareTitle"/>
 
     <Button
         android:id="@+id/shareToWechatFavorite"
@@ -36,7 +46,42 @@
         android:onClick="clickShare"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@id/shareToWechatTimeline"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shareTitle"/>
+
+    <Button
+        android:id="@+id/shareToQQ"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="QQ好友"
+        android:onClick="clickShare"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintRight_toLeftOf="@id/shareToQZone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shareToWechat"/>
+
+    <Button
+        android:id="@+id/shareToQZone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="clickShare"
+        android:text="QQ空间"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/shareToQQ"
+        app:layout_constraintRight_toLeftOf="@id/shareToQPublish"
+        app:layout_constraintTop_toBottomOf="@id/shareToWechatTimeline"/>
+
+    <Button
+        android:id="@+id/shareToQPublish"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="QQ说说"
+        android:onClick="clickShare"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/shareToQZone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shareToWechatFavorite"/>
 
     <Button
         android:id="@+id/shareToWeibo"
@@ -46,54 +91,31 @@
         android:onClick="clickShare"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintRight_toLeftOf="@id/shareToQQ"
+        app:layout_constraintRight_toLeftOf="@id/shareToAlipay"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shareToWechat"/>
-
-    <Button
-        android:id="@+id/shareToQQ"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:onClick="clickShare"
-        android:text="QQ好友"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toRightOf="@id/shareToWeibo"
-        app:layout_constraintRight_toLeftOf="@id/shareToQZone"
-        app:layout_constraintTop_toBottomOf="@id/shareToWechatTimeline"/>
-
-    <Button
-        android:id="@+id/shareToQZone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="QQ空间"
-        android:onClick="clickShare"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toRightOf="@id/shareToQQ"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shareToWechatFavorite"/>
+        app:layout_constraintTop_toBottomOf="@id/shareToQQ"/>
 
     <Button
         android:id="@+id/shareToAlipay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="支付宝"
         android:onClick="clickShare"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        android:text="支付宝"
         app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/shareToWeibo"
         app:layout_constraintRight_toLeftOf="@id/shareToDing"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shareToWeibo"/>
+        app:layout_constraintTop_toBottomOf="@id/shareToQZone"/>
 
     <Button
         android:id="@+id/shareToDing"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:onClick="clickShare"
         android:text="钉钉"
+        android:onClick="clickShare"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@id/shareToAlipay"
-        app:layout_constraintRight_toLeftOf="@id/shareToQZone"
-        app:layout_constraintTop_toBottomOf="@id/shareToQQ"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shareToQPublish"/>
 
     <Button
         android:id="@+id/shareToSystem"
@@ -105,6 +127,27 @@
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/shareToAlipay"/>
 
+    <!--<TextView-->
+        <!--android:id="@+id/ssoTitle"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="登录"-->
+        <!--android:textSize="18dp"-->
+        <!--android:layout_margin="5dp"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/shareToSystem"/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/ssoToWeibo"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="微博登录"-->
+        <!--android:onClick="clickShare"-->
+        <!--app:layout_constraintHorizontal_chainStyle="spread"-->
+        <!--app:layout_constraintHorizontal_weight="1"-->
+        <!--app:layout_constraintRight_toLeftOf="@id/shareToAlipay"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/ssoTitle"/>-->
+
     <TextView
         android:id="@+id/result"
         android:layout_width="match_parent"
@@ -112,4 +155,5 @@
         android:textSize="30dp"
         android:layout_margin="18dp"
         app:layout_constraintBottom_toBottomOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

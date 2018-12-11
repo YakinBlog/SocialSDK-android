@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.tencent.connect.share.QQShare;
+import com.tencent.connect.share.QzonePublish;
 import com.tencent.connect.share.QzoneShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
@@ -110,6 +111,10 @@ public class QQShareProxy {
             imgs.add(thumb);
             bundle.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, imgs);
             tencentApi.shareToQzone((Activity) context, bundle, sListener);
+        } else if(BusEvent.ACTION_SHARE_TO_QPUBLISH.equals(action)) {
+            bundle.putInt(QzonePublish.PUBLISH_TO_QZONE_KEY_TYPE, QzonePublish.PUBLISH_TO_QZONE_TYPE_PUBLISHMOOD);
+            bundle.putString(QzonePublish.PUBLISH_TO_QZONE_SUMMARY, "#" + title + "#" + scene.getDesc() + scene.getLink());
+            tencentApi.publishToQzone((Activity) context, bundle, sListener);
         }
     }
 }

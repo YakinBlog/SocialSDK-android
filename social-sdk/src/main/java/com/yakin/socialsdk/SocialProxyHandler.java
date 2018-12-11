@@ -40,7 +40,8 @@ public class SocialProxyHandler extends Activity {
             WBShareProxy.share(this, mSocialConfig.weiboAppKey, mSocialConfig.weiboRedirectrUrl,
                     mSocialConfig.weiboScope, mSocialScene);
         } else if(BusEvent.ACTION_SHARE_TO_QQ.equals(mSocialAction) ||
-                BusEvent.ACTION_SHARE_TO_QZONE.equals(mSocialAction)) {
+                BusEvent.ACTION_SHARE_TO_QZONE.equals(mSocialAction) ||
+                BusEvent.ACTION_SHARE_TO_QPUBLISH.equals(mSocialAction)) {
             QQShareProxy.share(this, mSocialConfig.qqAppId, mSocialAction, mSocialScene);
         } else if(BusEvent.ACTION_SHARE_TO_ALIPAY.equals(mSocialAction)) {
             AlipayShareProxy.share(this, mSocialConfig.alipayAppId, mSocialScene);
@@ -56,7 +57,8 @@ public class SocialProxyHandler extends Activity {
         if(BusEvent.ACTION_SHARE_TO_WEIBO.equals(mSocialAction)) {
             WBShareProxy.doResultIntent(data);
         } else if(BusEvent.ACTION_SHARE_TO_QQ.equals(mSocialAction) ||
-                BusEvent.ACTION_SHARE_TO_QZONE.equals(mSocialAction)) {
+                BusEvent.ACTION_SHARE_TO_QZONE.equals(mSocialAction) ||
+                BusEvent.ACTION_SHARE_TO_QPUBLISH.equals(mSocialAction)) {
             QQShareProxy.onActivityResultData(mSocialAction, requestCode, resultCode, data);
         }
         finish();

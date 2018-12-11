@@ -67,6 +67,14 @@ public class SocialSDK {
         SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_QZONE, scene);
     }
 
+    public static void shareToQPublish(Context context, SocialScene scene) {
+        if(scene == null || sConfig == null || TextUtils.isEmpty(sConfig.qqAppId)) {
+            log(BusEvent.ACTION_SHARE_TO_QPUBLISH.toUpperCase(), "scene:" + scene + "\nconfig:" + sConfig);
+            return;
+        }
+        SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_QPUBLISH, scene);
+    }
+
     public static void shareToAlipay(Context context, SocialScene scene) {
         if(scene == null || sConfig == null || TextUtils.isEmpty(sConfig.alipayAppId)) {
             log(BusEvent.ACTION_SHARE_TO_ALIPAY.toUpperCase(), "scene:" + scene + "\nconfig:" + sConfig);
