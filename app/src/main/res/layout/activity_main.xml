@@ -95,6 +95,16 @@
         app:layout_constraintRight_toLeftOf="@id/shareToQZone"
         app:layout_constraintTop_toBottomOf="@id/shareToQQ"/>
 
+    <Button
+        android:id="@+id/shareToSystem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clickShare"
+        android:text="更多..."
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shareToAlipay"/>
+
     <TextView
         android:id="@+id/result"
         android:layout_width="match_parent"

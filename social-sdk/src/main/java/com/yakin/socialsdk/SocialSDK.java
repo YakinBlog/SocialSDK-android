@@ -1,6 +1,7 @@
 package com.yakin.socialsdk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -80,5 +81,12 @@ public class SocialSDK {
             return;
         }
         SocialProxyHandler.start(context, BusEvent.ACTION_SHARE_TO_DING, scene);
+    }
+
+    public static void shareToSystem(Context context, SocialScene scene) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "#" + scene.getTitle() + "#" + scene.getDesc() + scene.getLink());
+        context.startActivity(Intent.createChooser(shareIntent, "分享"));
     }
 }

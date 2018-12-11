@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
             SocialSDK.shareToAlipay(this, mSocialScene);
         } else if(view.getId() == R.id.shareToDing) {
             SocialSDK.shareToDing(this, mSocialScene);
+        } else if(view.getId() == R.id.shareToSystem) {
+            SocialSDK.shareToSystem(this, mSocialScene);
         }
     }
 }
