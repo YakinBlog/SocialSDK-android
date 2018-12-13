@@ -144,9 +144,43 @@
         <!--android:onClick="clickShare"-->
         <!--app:layout_constraintHorizontal_chainStyle="spread"-->
         <!--app:layout_constraintHorizontal_weight="1"-->
-        <!--app:layout_constraintRight_toLeftOf="@id/shareToAlipay"-->
+        <!--app:layout_constraintRight_toLeftOf="@id/ssoToWechat"-->
         <!--app:layout_constraintLeft_toLeftOf="parent"-->
         <!--app:layout_constraintTop_toBottomOf="@id/ssoTitle"/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/ssoToWechat"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="微信登录"-->
+        <!--android:onClick="clickShare"-->
+        <!--app:layout_constraintHorizontal_weight="1"-->
+        <!--app:layout_constraintLeft_toRightOf="@id/ssoToWeibo"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/ssoTitle"/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/ssoToAlipay"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="支付宝登录"-->
+        <!--android:onClick="clickShare"-->
+        <!--app:layout_constraintHorizontal_chainStyle="spread"-->
+        <!--app:layout_constraintHorizontal_weight="1"-->
+        <!--app:layout_constraintRight_toLeftOf="@id/ssoToDing"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/ssoToWeibo"/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/ssoToDing"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="钉钉登录"-->
+        <!--android:onClick="clickShare"-->
+        <!--app:layout_constraintHorizontal_weight="1"-->
+        <!--app:layout_constraintLeft_toRightOf="@id/ssoToAlipay"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/ssoToWechat"/>-->
 
     <TextView
         android:id="@+id/result"

@@ -18,18 +18,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    repositories {
-        flatDir {
-            dirs 'libs'
-        }
-    }
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs') // QQ、支付宝
+    api fileTree(include: ['*.jar'], dir: 'libs') // QQ、支付宝、微博
 
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6' // 微信
     api 'com.alibaba.android:ddsharesdk:1.1.0' // 钉钉
-    api (name:'weibo-4.3.6', ext:'aar') // 微博
 }
+
+apply from: 'publish_bintray.gradle' // 发布maven

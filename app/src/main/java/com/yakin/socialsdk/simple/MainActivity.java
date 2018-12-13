@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity implements IBusListener {
 
         SocialSDK.sConfig = new SocialConfig()
                 .setPrintLog(true)
-                .setWechatAppId("wx88888888")
+                .setWechatAppId("wx38bf6c7a276197a0")
                 .setWeiboAppKey("2099293047")
                 .setQQAppId("1106709509")
-                .setAlipayAppId("2018121062498015")
+                .setAlipayAppId("2018121162507346")
                 .setDingAppId("dingoa9ygtvrq4mphilr0r");
 
         mResultView = (TextView) findViewById(R.id.result);
