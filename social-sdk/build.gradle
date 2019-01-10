@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion android_compileSdkVersion.toInteger()
+    buildToolsVersion android_buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion android_minSdkVersion.toInteger()
+        targetSdkVersion android_compileSdkVersion.toInteger()
+
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs') // QQ、支付宝、微博
+
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+' // 微信
+    api 'com.alibaba.android:ddsharesdk:1.1.0' // 钉钉
+}
+
+apply from: 'publish_bintray.gradle' // 发布maven
