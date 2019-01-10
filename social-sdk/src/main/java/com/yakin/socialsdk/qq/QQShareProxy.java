@@ -93,6 +93,10 @@ public class QQShareProxy {
             title = AppUtil.getAppName(context);
         }
         Tencent tencentApi = TencentAPI.createTencentInstance(context, appId);
+        if(!tencentApi.isQQInstalled(context)) {
+            BusProvider.getInstance().notify(new BusEvent(action, SocialResult.RESULT_NO_INSTALLED));
+            return;
+        }
         final Bundle bundle = new Bundle();
         sListener.action = action;
         if(BusEvent.ACTION_SHARE_TO_QQ.equals(action)) {

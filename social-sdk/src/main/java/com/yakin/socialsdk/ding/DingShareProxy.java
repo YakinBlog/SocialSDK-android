@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
+import com.android.dingtalk.share.ddsharemodule.IDDShareApi;
 import com.android.dingtalk.share.ddsharemodule.message.BaseResp;
 import com.android.dingtalk.share.ddsharemodule.message.DDMediaMessage;
 import com.android.dingtalk.share.ddsharemodule.message.DDWebpageMessage;
@@ -16,10 +17,9 @@ import com.yakin.socialsdk.bus.BusProvider;
 import com.yakin.socialsdk.model.SocialResult;
 import com.yakin.socialsdk.model.SocialScene;
 import com.yakin.socialsdk.utils.AppUtil;
+import com.yakin.socialsdk.utils.BitmapUtil;
 import com.yakin.socialsdk.utils.ThreadMgr;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
@@ -50,7 +50,7 @@ public class DingShareProxy {
                     SocialSDK.log(BusEvent.ACTION_SHARE_TO_ALIPAY.toUpperCase(), e.getLocalizedMessage());
                     thumb = AppUtil.getAppIcon(context);
                 }
-                final Bitmap thumbBitmap = getCompressBitmap(thumb);
+                final Bitmap thumbBitmap = BitmapUtil.compressBitmap(thumb, 32 * 1024);
                 thumb.recycle();
                 ThreadMgr.postTask(ThreadMgr.TYPE_UI, new Runnable() {
                     @Override
@@ -75,20 +75,16 @@ public class DingShareProxy {
         webMessage.mTitle = title;
         webMessage.mContent = scene.getDesc();
         webMessage.setThumbImage(thumb);
-        thumb.recycle();
         SendMessageToDD.Req req = new SendMessageToDD.Req();
         req.mMediaMessage = webMessage;
         req.mTransaction = String.valueOf(System.currentTimeMillis());
-        DingAPI.createDDShareApi(context, appId).sendReq(req);
+        IDDShareApi ddApi = DingAPI.createDDShareApi(context, appId);
+        if(ddApi.isDDSupportAPI()) {
+            ddApi.sendReq(req);
+        } else {
+            BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_DING, SocialResult.RESULT_NO_INSTALLED));
+        }
         ((Activity) context).finish();
-    }
-
-    private static Bitmap getCompressBitmap(Bitmap thumb) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        thumb.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inSampleSize = 2;
-        ByteArrayInputStream bitmapStream = new ByteArrayInputStream(stream.toByteArray());
-        return BitmapFactory.decodeStream(bitmapStream, null, opts);
+        thumb.recycle();
     }
 }

@@ -17,6 +17,7 @@ import com.yakin.socialsdk.bus.BusProvider;
 import com.yakin.socialsdk.model.SocialResult;
 import com.yakin.socialsdk.model.SocialScene;
 import com.yakin.socialsdk.utils.AppUtil;
+import com.yakin.socialsdk.utils.BitmapUtil;
 import com.yakin.socialsdk.utils.ThreadMgr;
 
 import java.io.InputStream;
@@ -49,7 +50,8 @@ public class AlipayShareProxy {
                     SocialSDK.log(BusEvent.ACTION_SHARE_TO_ALIPAY.toUpperCase(), e.getLocalizedMessage());
                     thumb = AppUtil.getAppIcon(context);
                 }
-                final Bitmap thumbBitmap = thumb;
+                final Bitmap thumbBitmap = BitmapUtil.compressBitmap(thumb, 32 * 1024);
+                thumb.recycle();
                 ThreadMgr.postTask(ThreadMgr.TYPE_UI, new Runnable() {
                     @Override
                     public void run() {
@@ -73,15 +75,19 @@ public class AlipayShareProxy {
         webMessage.title = title;
         webMessage.description = scene.getDesc();
         webMessage.setThumbImage(thumb);
-        thumb.recycle();
         SendMessageToZFB.Req req = new SendMessageToZFB.Req();
         req.message = webMessage;
         req.transaction = String.valueOf(System.currentTimeMillis());
         IAPApi alipayApi = AlipayAPI.createZFBApi(context, appId);
-        if(alipayApi.getZFBVersionCode() < 101) { // 9.9.5版本（VersionCode为101）开始无需判断分享场景
-            req.scene = SendMessageToZFB.Req.ZFBSceneTimeLine;
+        if(alipayApi.isZFBAppInstalled()) {
+            if (alipayApi.getZFBVersionCode() < 101) { // 9.9.5版本（VersionCode为101）开始无需判断分享场景
+                req.scene = SendMessageToZFB.Req.ZFBSceneTimeLine;
+            }
+            alipayApi.sendReq(req);
+        } else {
+            BusProvider.getInstance().notify(new BusEvent(BusEvent.ACTION_SHARE_TO_ALIPAY, SocialResult.RESULT_NO_INSTALLED));
         }
-        alipayApi.sendReq(req);
         ((Activity) context).finish();
+        thumb.recycle();
     }
 }

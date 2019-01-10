@@ -100,8 +100,8 @@ public class WBShareProxy {
         webpageObject.description = scene.getDesc();
         webpageObject.actionUrl = scene.getLink();
         webpageObject.setThumbImage(thumb);
-        thumb.recycle();
         weiboMessage.mediaObject = webpageObject;
         sHandler.shareMessage(weiboMessage, false);
+        thumb.recycle();
     }
 }

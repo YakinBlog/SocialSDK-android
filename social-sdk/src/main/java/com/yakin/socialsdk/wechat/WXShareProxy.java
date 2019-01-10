@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.text.TextUtils;
 
 import com.tencent.mm.opensdk.constants.Build;
@@ -18,6 +19,7 @@ import com.yakin.socialsdk.bus.BusProvider;
 import com.yakin.socialsdk.model.SocialResult;
 import com.yakin.socialsdk.model.SocialScene;
 import com.yakin.socialsdk.utils.AppUtil;
+import com.yakin.socialsdk.utils.BitmapUtil;
 import com.yakin.socialsdk.utils.ThreadMgr;
 
 import java.io.InputStream;
@@ -47,7 +49,10 @@ public class WXShareProxy {
                     SocialSDK.log(action.toUpperCase(), e.getLocalizedMessage());
                     thumb = AppUtil.getAppIcon(context);
                 }
-                final Bitmap thumbBitmap = thumb;
+                Bitmap compressBitmap = BitmapUtil.compressBitmap(thumb, 32 * 1024);
+                thumb.recycle();
+                final Bitmap thumbBitmap = BitmapUtil.fillAlphaPlace(compressBitmap, Color.WHITE);
+                compressBitmap.recycle();
                 ThreadMgr.postTask(ThreadMgr.TYPE_UI, new Runnable() {
                     @Override
                     public void run() {
@@ -83,30 +88,33 @@ public class WXShareProxy {
         mediaMessage.title = title;
         mediaMessage.description = scene.getDesc();
         mediaMessage.setThumbImage(thumb);
-        thumb.recycle();
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());
         req.message = mediaMessage;
         IWXAPI wxApi = WXAPI.createWXAPIInstance(context, appId);
-        int supportVer = wxApi.getWXAppSupportAPI();
-        SocialSDK.log(action.toUpperCase(), "supportVer:" + supportVer);
-        if(BusEvent.ACTION_SHARE_TO_WECHAT_TIMELINE.equals(action)) {
-            if (supportVer >= Build.TIMELINE_SUPPORTED_SDK_INT) {
-                req.scene = SendMessageToWX.Req.WXSceneTimeline;
+        if(wxApi.isWXAppInstalled()) {
+            int supportVer = wxApi.getWXAppSupportAPI();
+            SocialSDK.log(action.toUpperCase(), "supportVer:" + supportVer);
+            if (BusEvent.ACTION_SHARE_TO_WECHAT_TIMELINE.equals(action)) {
+                if (supportVer >= Build.TIMELINE_SUPPORTED_SDK_INT) {
+                    req.scene = SendMessageToWX.Req.WXSceneTimeline;
+                } else {
+                    req.scene = SendMessageToWX.Req.WXSceneSession;
+                }
+            } else if (BusEvent.ACTION_SHARE_TO_WECHAT_FAVORITE.equals(action)) {
+                if (supportVer >= Build.FAVORITE_SUPPPORTED_SDK_INT) {
+                    req.scene = SendMessageToWX.Req.WXSceneFavorite;
+                } else {
+                    req.scene = SendMessageToWX.Req.WXSceneSession;
+                }
             } else {
                 req.scene = SendMessageToWX.Req.WXSceneSession;
             }
-        } else if(BusEvent.ACTION_SHARE_TO_WECHAT_FAVORITE.equals(action)) {
-            if (supportVer >= Build.FAVORITE_SUPPPORTED_SDK_INT) {
-                req.scene = SendMessageToWX.Req.WXSceneFavorite;
-            } else {
-                req.scene = SendMessageToWX.Req.WXSceneSession;
-            }
+            wxApi.sendReq(req);
         } else {
-            req.scene = SendMessageToWX.Req.WXSceneSession;
+            BusProvider.getInstance().notify(new BusEvent(action, SocialResult.RESULT_NO_INSTALLED));
         }
-
-        wxApi.sendReq(req);
         ((Activity) context).finish();
+        thumb.recycle();
     }
 }

@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements IBusListener {
             .setDesc("这是一个集分享与登录于一体的社交类SDK，提供了一键式社交的完整的解决方案")
             .setContent("快来和我一起分享")
             .setThumb("http://yakinblog.com/assets/img/avatar-001.jpg")
+//            .setThumb("http://img.netbian.com/file/2019/0103/957a6d9181291fb01d699e4c093e338c.jpg")
             .setLink("http://yakinblog.com/");
 
     private TextView mResultView;
@@ -76,58 +77,69 @@ public class MainActivity extends AppCompatActivity implements IBusListener {
     public void onBusEvent(BusEvent event) {
         if(BusEvent.ACTION_SHARE_TO_WECHAT.equals(event.getAction())) {
             if(event.getResult() != null) {
-                mResultView.setText("分享到微信好友" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                mResultView.setText(getResultStr("微信", event.getResult()));
             } else {
                 mResultView.setText("分享到微信好友失败:" + event.getThrowable().getLocalizedMessage());
             }
         } else if(BusEvent.ACTION_SHARE_TO_WECHAT_TIMELINE.equals(event.getAction())) {
             if(event.getResult() != null) {
-                mResultView.setText("分享到微信朋友圈" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                mResultView.setText(getResultStr("微信朋友圈", event.getResult()));
             } else {
                 mResultView.setText("分享到微信朋友圈失败:" + event.getThrowable().getLocalizedMessage());
             }
         } else if(BusEvent.ACTION_SHARE_TO_WECHAT_FAVORITE.equals(event.getAction())) {
             if(event.getResult() != null) {
-                mResultView.setText("分享到微信收藏" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                mResultView.setText(getResultStr("微信收藏", event.getResult()));
             } else {
                 mResultView.setText("分享到微信收藏失败:" + event.getThrowable().getLocalizedMessage());
             }
         } else if(BusEvent.ACTION_SHARE_TO_QQ.equals(event.getAction())) {
             if(event.getResult() != null) {
-                mResultView.setText("分享到QQ好友" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                mResultView.setText(getResultStr("QQ好友", event.getResult()));
             } else {
                 mResultView.setText("分享到QQ好友失败:" + event.getThrowable().getLocalizedMessage());
             }
         } else if(BusEvent.ACTION_SHARE_TO_QZONE.equals(event.getAction())) {
             if(event.getResult() != null) {
-                mResultView.setText("分享到QQ空间" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                mResultView.setText(getResultStr("QQ空间", event.getResult()));
             } else {
                 mResultView.setText("分享到QQ空间失败:" + event.getThrowable().getLocalizedMessage());
             }
         } else if(BusEvent.ACTION_SHARE_TO_QPUBLISH.equals(event.getAction())) {
             if(event.getResult() != null) {
-                mResultView.setText("分享到QQ说说" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                mResultView.setText(getResultStr("QQ说说", event.getResult()));
             } else {
                 mResultView.setText("分享到QQ说说失败:" + event.getThrowable().getLocalizedMessage());
             }
         } else if(BusEvent.ACTION_SHARE_TO_WEIBO.equals(event.getAction())) {
             if(event.getResult() != null) {
-                mResultView.setText("分享到微博" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                mResultView.setText(getResultStr("微博", event.getResult()));
             } else {
                 mResultView.setText("分享到微博失败:" + event.getThrowable().getLocalizedMessage());
             }
         } else if(BusEvent.ACTION_SHARE_TO_DING.equals(event.getAction())) {
             if(event.getResult() != null) {
-                mResultView.setText("分享到钉钉" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                mResultView.setText(getResultStr("钉钉", event.getResult()));
             } else {
                 mResultView.setText("分享到钉钉失败:" + event.getThrowable().getLocalizedMessage());
             }
         } else if(BusEvent.ACTION_SHARE_TO_ALIPAY.equals(event.getAction())) {
             if(event.getResult() != null) {
-                mResultView.setText("分享到支付宝" + (event.getResult() == SocialResult.RESULT_SUCCEED ? "成功" : "取消"));
+                mResultView.setText(getResultStr("支付宝", event.getResult()));
             } else {
                 mResultView.setText("分享到支付宝失败:" + event.getThrowable().getLocalizedMessage());
             }
         }
+    }
+
+    private String getResultStr(String appName, SocialResult result) {
+       if(result == SocialResult.RESULT_SUCCEED) {
+           return "分享到" + appName + "成功";
+       } else if(result == SocialResult.RESULT_CANCEL) {
+           return "分享到" + appName + "取消";
+       } else if(result == SocialResult.RESULT_NO_INSTALLED) {
+           return appName + "未安装";
+       }
+        return "分享到" + appName + "失败";
     }
 }
