@@ -27,4 +27,15 @@ dependencies {
     api 'com.alibaba.android:ddsharesdk:1.1.0' // 钉钉
 }
 
-apply from: 'publish_bintray.gradle' // 发布maven
+ext {
+    groupId = 'com.yakin'
+    artifactId = 'socialsdk'
+    versionName = '0.0.1'
+    describe = 'Support sharing and authorization'
+
+    licenses = [ 'Apache-2.0' ]
+    websiteUrl = 'http://yakinblog.com'
+    vcsUrl = 'https://github.com/YakinBlog/SocialSDK-android.git'
+    labels = ['android', 'sharing', 'auth']
+}
+apply from: 'https://raw.githubusercontent.com/YakinBlog/buildscript/master/publish_bintray.gradle'
