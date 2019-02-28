@@ -1,13 +1,9 @@
-# SocialSDK-android
+# SocialSDK-android 
 
-``` xml
-<dependency>
-  <groupId>com.yakin</groupId>
-  <artifactId>socialsdk</artifactId>
-  <version>0.0.1</version>
-  <type>pom</type>
-</dependency>
-```
+|  |  |
+| -------- | ------ |
+| Newest | [![Download](https://api.bintray.com/packages/yakin/maven/com.yakin:socialsdk/images/download.svg)](https://bintray.com/yakin/maven/com.yakin:socialsdk/_latestVersion) |
+| Usage | `'com.yakin:socialsdk:+'` |
 
 ### 0.0.1：
 
